@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '.prismas/client-postgres';
-import { PrismaClient as PrismaClientMysql } from '.prismas/client-mysql';
+import { PrismaClient } from '.zprismas/client-postgres';
+import { PrismaClient as PrismaClientMysql } from '.zprismas/client-mysql';
 @Injectable()
 export class PrismaPostgreService extends PrismaClient implements OnModuleInit {
     async onModuleInit() {

@@ -26,12 +26,12 @@ export class UserService {
 
   async findAll() {
     // SELECT * FROM customers WHERE customer_id = 0
-    return await this.prismaPostgresService.customers.findMany()
+    return await this.prismaPostgresService.customers.findMany();
 
   }
 
   async findOne(id: number) {
-    return await this.prismaMySQLService.customers.findMany()
+    return await this.prismaMySQLService.customers.findMany();
 
   }
 

@@ -1,6 +1,15 @@
 import { Body, Controller, Get, Param, Post, Put, Query, Req } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiProperty, ApiQuery, ApiTags } from '@nestjs/swagger';
+
+class UserType {
+  @ApiProperty()
+  id: number
+  @ApiProperty()
+  userName: string
+  @ApiProperty()
+  pass: string
+}
 
 @ApiTags("app")
 @Controller("/app")
@@ -12,27 +21,38 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @ApiQuery({
+    name: "name",
+    type: String
+  })
+  @ApiParam({
+    name: "name2",
+    type: String
+  })
+  @ApiBody({
+    type: UserType
+  })
   @Post("/demo/:name2/:email2") // method: GET => endpoint /
   getDemo(@Req() req,
-    @Query("name") name: string,
-    @Query("email") email: string,
-    @Param("name2") name2: string,
-    @Param("email2") email2: string,
+    // @Query("name") name: string,
+    // @Query("email") email: string,
+    // @Param("name2") name2: string,
+    // @Param("email2") email2: string,
 
-    @Body() body,
-    
+    // @Body() body: UserType,
+
   ) {
     // request
     // url
     // + query params (query string): /demo?name=abc&email=a@gmail.com
-    // let { name, email } = req.query
+    let { name, email } = req.query
     // // + route params: /demo/abc/a@gmail.com
-    // let { name2, email2 } = req.params
+    let { name2, email2 } = req.params
 
 
 
     // body (json)
-    let { id, userName, pass } = body
+    let { id, userName, pass } = req.body
 
     return { name, email, name2, email2, id, userName, pass }
   }
