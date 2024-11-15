@@ -8,7 +8,7 @@ export class AppService {
 
   constructor(
     private prismaService: PrismaService,
-    @Inject("SHIPPING_NAME") private notifyService: ClientProxy,
+    @Inject("SHIPPING_NAME") private shippingService: ClientProxy,
 
   ) { }
 
@@ -22,7 +22,7 @@ export class AppService {
 
     if (orderData) {
       // lưu shipping => service shipping
-      let shippingData = await lastValueFrom(this.notifyService.send("shipping_product", { order_id: orderData.order_id, email, full_name, address }))
+      let shippingData = await lastValueFrom(this.shippingService.send("shipping_product", { order_id: orderData.order_id, email, full_name, address }))
       console.log(shippingData)
       
     }

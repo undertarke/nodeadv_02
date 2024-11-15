@@ -1,24 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as nodemailer from 'nodemailer';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 
 @Injectable()
 export class ProductService {
 
     constructor(
-        private prismaService: PrismaService
+        private prismaService: PrismaService,
+        @Inject(CACHE_MANAGER) private cacheManager: Cache
     ) { }
 
     async searchProduct(name) {
+        let dataCache = await this.cacheManager.get("SEARCH_PRODUCT")
+
+        // kiểm tra cache => 
+        if (dataCache) {
+            return dataCache
+        }
+
         // SELECT * FROM product WHERE product_name like '%name%'
         let data = await this.prismaService.product.findMany({
             where: {
                 product_name: {
                     contains: name
-                }
+                },
             }
         });
+
+        this.cacheManager.set("SEARCH_PRODUCT", data)
+
         return data;
     }
 

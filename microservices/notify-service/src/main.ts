@@ -9,10 +9,10 @@ async function bootstrap() {
       urls:['amqp://admin:1234@localhost:5672'],
       queue: "notify_queue",
       queueOptions: {
-        durable: true // giữ lại các queue khi rabbitMQ bị restart
+        durable: false // giữ lại các queue khi rabbitMQ bị restart
         
       },
-      persistent:true // giữ lại các message khi rabbitMQ bị restart
+      persistent:false // giữ lại các message khi rabbitMQ bị restart
     }
   });
   await app.listen();

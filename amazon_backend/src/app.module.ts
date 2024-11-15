@@ -5,6 +5,7 @@ import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './product/product.module';
+import { CacheManagerModule } from './cache-manager/cache-manager.module';
 
 @Module({
   imports: [
@@ -12,7 +13,9 @@ import { ProductModule } from './product/product.module';
 
     ConfigModule.forRoot({ isGlobal: true }),
 
-    ProductModule
+    ProductModule,
+
+    CacheManagerModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

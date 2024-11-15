@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ClientProxy } from '@nestjs/microservices';
-import { lastValueFrom } from 'rxjs';
+import { catchError, lastValueFrom, of, retry, timeout } from 'rxjs';
 
 @Controller()
 export class AppController {
@@ -22,14 +22,20 @@ export class AppController {
     let { email, product_id, user_id, full_name, phone, address } = order;
 
     // gửi mail xác nhận đơn hàng    
-    // this.notifyService.emit("confirm_product", email);
+    await this.notifyService.emit("confirm_order", email)
 
 
     // lưu order
-    let order_data = await lastValueFrom(this.productService.send("order_key", order));
+    let order_data = await lastValueFrom(this.productService.send("order_key", order).pipe(
+      timeout(1000),
+      retry(3),
+      catchError(err => {
+        console.log("Service product not active")
+        return of("Service product not active")
+      })
+    ));
 
 
-    console.log(order_data)
 
     return "Đặt hàng thành công"
 

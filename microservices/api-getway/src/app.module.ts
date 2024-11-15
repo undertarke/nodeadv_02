@@ -25,9 +25,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           urls: ['amqp://admin:1234@localhost:5672'],
           queue: "notify_queue",
           queueOptions: {
-            durable: true
+            durable: false
           },
-          persistent: true
+          persistent: false
         }
       }
     ])
