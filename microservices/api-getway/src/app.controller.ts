@@ -10,6 +10,16 @@ export class AppController {
     @Inject("NOTIFY_NAME") private notifyService: ClientProxy,
   ) { }
 
+  @Get("/demo")
+  async getDemo() {
+    return "đây là demo"
+  }
+
+  @Get("/get-cache")
+  async getCache() {
+    return await lastValueFrom(this.productService.send("get_demo_cache", ""));
+  }
+
   @Get("/get-product")
   async getHello() {
 
