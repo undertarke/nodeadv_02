@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RedisCacheModule } from './redis-cache/redis-cache.module';
+import { ElasticModule } from './elastic/elastic.module';
 
 @Module({
   imports: [PrismaModule, ConfigModule.forRoot({ isGlobal: true }),
@@ -13,7 +14,7 @@ import { RedisCacheModule } from './redis-cache/redis-cache.module';
         name: "SHIPPING_NAME",
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://admin:1234@some-rabbit:5672'],
+          urls: ['amqp://admin:1234@localhost:5672'],
           queue: "shipping_queue",
           queueOptions: {
             durable: true
@@ -21,7 +22,8 @@ import { RedisCacheModule } from './redis-cache/redis-cache.module';
           persistent: true
         }
       }]),
-    RedisCacheModule
+    RedisCacheModule,
+    ElasticModule
 
   ],
   controllers: [AppController],

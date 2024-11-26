@@ -10,10 +10,21 @@ export class AppController {
     @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
+  @MessagePattern("get_elastic")
+  async getElastic() {
+    return this.appService.getElastic()
+  }
+
+  @MessagePattern("create_elastic")
+  async createElastic() {
+    throw new Error("Buggs product service")
+    return this.appService.createElastic()
+  }
+
   @MessagePattern("get_demo_cache")
   async getCache(@Payload() data) {
 
-    return  this.cacheManager.get("DEMO");
+    return this.cacheManager.get("DEMO");
   }
 
   @MessagePattern("get_product")

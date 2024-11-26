@@ -6,6 +6,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './product/product.module';
 import { CacheManagerModule } from './cache-manager/cache-manager.module';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { ElasticModule } from './elastic/elastic.module';
 
 @Module({
   imports: [
@@ -15,7 +17,10 @@ import { CacheManagerModule } from './cache-manager/cache-manager.module';
 
     ProductModule,
 
-    CacheManagerModule
+    CacheManagerModule,
+
+    ElasticModule
+    
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

@@ -10,6 +10,17 @@ export class AppController {
     @Inject("NOTIFY_NAME") private notifyService: ClientProxy,
   ) { }
 
+  @Get("/get-elastic")
+  async getElastic() {
+    throw new Error("Buggs API gateway")
+    return await lastValueFrom(this.productService.send("get_elastic", ""))
+  }
+
+  @Get("/create-elastic")
+  async createElastic() {
+    return await lastValueFrom(this.productService.send("create_elastic", ""))
+  }
+
   @Get("/demo")
   async getDemo() {
     return "đây là demo"
